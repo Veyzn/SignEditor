@@ -25,19 +25,16 @@ public class SignEditCMD implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        // Open the fake sign with the first line pre-filled with "Hello World"
         openSignEditor(player, "Hello World");
 
         return false;
     }
 
     private void openSignEditor(Player player, String line1Text) {
-        // Place a real sign at a nearby location
         Location tempLocation = player.getLocation().clone().add(0, 1, 0);
         Block block = tempLocation.getBlock();
         block.setType(Material.OAK_SIGN);
 
-        // Open the sign editor for the player after placing the sign
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -46,12 +43,11 @@ public class SignEditCMD implements CommandExecutor {
                     BlockPosition signPosition = new BlockPosition(tempLocation.getBlockX(), tempLocation.getBlockY(), tempLocation.getBlockZ());
                     openSignPacket.getBlockPositionModifier().write(0, signPosition);
                     block.setType(Material.AIR);
-                    // Send the packet to open the sign editor
                     ProtocolLibrary.getProtocolManager().sendServerPacket(player, openSignPacket);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        }.runTaskLater(Main.instance, 1L); // Small delay to ensure block entity registration
+        }.runTaskLater(Main.instance, 1L);
     }
 }

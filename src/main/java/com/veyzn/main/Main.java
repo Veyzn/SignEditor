@@ -29,10 +29,8 @@ public final class Main extends JavaPlugin {
                 Player player = event.getPlayer();
                 BlockPosition pos = event.getPacket().getBlockPositionModifier().read(0);
 
-                // Get the lines the player typed on the sign
                 String[] lines = event.getPacket().getStringArrays().read(0);
 
-                // Extract and broadcast the second line (expected to be a number)
                 String numberInput = lines[1];
                 try {
                     int number = Integer.parseInt(numberInput);
@@ -45,7 +43,7 @@ public final class Main extends JavaPlugin {
                 Location signLocation = new Location(player.getWorld(), pos.getX(), pos.getY(), pos.getZ());
                 Block block = signLocation.getBlock();
                 if (block.getType() == Material.OAK_SIGN || block.getType() == Material.OAK_WALL_SIGN) {
-                    block.setType(Material.AIR); // Remove the sign
+                    block.setType(Material.AIR);
                 }
             }
         });
